@@ -33,7 +33,7 @@ namespace ApiWebFood.Controllers.Login
         public IActionResult Register(UserRegister user)
         {
             string hashed = BCrypt.Net.BCrypt.HashPassword(user.Password);
-            var u = new Entities.User { UserName = user.Name, Email = user.Email, PassWord = user.Password , Address ="hanoi"};
+            var u = new Entities.User { UserName = user.Name, Email = user.Email, PassWord = hashed, Address ="hanoi"};
             _context.Users.Add(u);
             _context.SaveChanges();
             return Ok(new Userdata { Name = user.Name, Email = user.Email, Token = GeneralJWT(u)});
@@ -78,6 +78,30 @@ namespace ApiWebFood.Controllers.Login
             }
             return Unauthorized();
         }
-    }
+        [Route("login")]
+        [HttpPost]
+        public IActionResult Login(UserLogin login)
+        {
+            try
+            {
+                var UserLogin = _context.Users.Where(u => u.Email.Equals(login.Email)).First();
+                if (UserLogin == null)
+                {
+                    return NotFound();
+                }
+                bool verycode = BCrypt.Net.BCrypt.Verify(login.Password, UserLogin.PassWord);
+                if (!verycode)
+                {
+                    return Unauthorized();
+                }
+                return Ok(new Userdata { Id = UserLogin.Id, Name = UserLogin.UserName, Email = UserLogin.Email, Token = GeneralJWT(UserLogin) }); ;
+            }
+            catch (Exception)
+            {
 
+                throw;
+                return Unauthorized(login);
+            }
+        }
+    }
 }
