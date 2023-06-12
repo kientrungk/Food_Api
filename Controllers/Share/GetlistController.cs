@@ -13,16 +13,16 @@ namespace ApiWebFood.Controllers.Share
         {
             _context = context;
         }
-        [Route("GetListProduct")]
-        [HttpGet]
-        public IActionResult GetlistProduct()
-        {
-            var ListProduct = _context.Products.ToList();
-            if (ListProduct == null)
-            {
-                return BadRequest();
-            }
-            return Ok();
-        }
+        //[Route("GetListProduct")]
+        //[HttpGet]
+        //public IActionResult GetlistProduct()
+        //{
+        //    var ListProduct = _context.Products.ToList();
+        //    if (ListProduct == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    return Ok();
+        //}
     }
 }

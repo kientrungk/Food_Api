@@ -28,7 +28,6 @@ builder.Services.AddCors(options =>
             policy.AllowAnyHeader();
         });
 });
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDevServer", policy =>
@@ -63,6 +62,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("./swagger/v1/swagger.json", "My API V1");
+    c.RoutePrefix = string.Empty;
+});
 
 app.UseHttpsRedirection();
 app.UseCors();

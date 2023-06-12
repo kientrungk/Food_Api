@@ -10,25 +10,54 @@ namespace ApiWebFood.Controllers.Admin
     public class ProductController : ControllerBase
     {
         // add mới 1 sản phẩm vào trong
-        private readonly ApiDotNetContext _context;
+        private readonly ApiDotNetContext _contextpr;
 
         public ProductController(ApiDotNetContext context)
         {
-            _context = context;
+            _contextpr = context;
         }
-        // thêm danh sách category
-        [Route("AddNewCategory")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllPr()
+        {
+            var pr = _contextpr.Products.ToList();
+            return Ok(pr);
+        }
         [HttpPost]
-        public IActionResult CreateCategory(Category cate)
+        public async Task<IActionResult> AddNewPr(Product pr)
         {
             try
             {
-                var Category = _context.Categories.Add(cate);
-                if (Category == null)
+                Product prs = new()
                 {
-                    return BadRequest();
+                    Name = pr.Name,
+                    Description = pr.Description,
+                    Price = pr.Price,
+                    Idcg = pr.Idcg,
+                    Carts = null,
+                    ImgProducts = null,
+                    ProductDiscounts = null,
+                    Reviews = null,
+                };
+                if(pr.Carts.Count > 0 && pr.Carts != null)
+                {
+                    prs.Carts = pr.Carts;
                 }
-                return Ok(Category);
+                if(pr.ImgProducts != null && pr.ImgProducts.Count > 0)
+                {
+                    prs.ImgProducts = pr.ImgProducts;
+                }
+                if (pr.ProductDiscounts != null && pr.ProductDiscounts.Count > 0)
+                {
+                    prs.ProductDiscounts = pr.ProductDiscounts;
+                }
+                if (pr.Reviews != null && pr.Reviews.Count > 0)
+                {
+                    prs.Reviews = pr.Reviews;
+                }
+                await _contextpr.Products.AddAsync(prs);
+                _contextpr.SaveChanges();
+                return Ok(prs);
+                return Ok(pr);
             }
             catch (Exception)
             {
@@ -36,66 +65,39 @@ namespace ApiWebFood.Controllers.Admin
                 throw;
             }
         }
-        [Route("ListCategory")]
-        [HttpGet]
-        public IActionResult GetlistCate()
+        [HttpPut]
+        public async Task<IActionResult> UpdatePr(Product pr)
         {
-            var Category = _context.Categories.ToList();
-            return Ok(Category);
-        }
-        [Route("AddNewProduct")]
-        [HttpPost]
-        public IActionResult CreatePro(Product pro)
-        {
-            try
+            if (pr != null)
             {
-                var Product = _context.Products.Add(pro);
-                if (Product == null)
-                {
-                    return BadRequest();
-                }
-                _context.SaveChanges();
-                return Ok(Product);
+                _contextpr.Products.Update(pr);
             }
-            catch (Exception)
-            {
-                return BadRequest();
-                throw;
-            }
+            _contextpr.SaveChanges();
+            return Ok();
         }
-        // lấy danh sách các sản phẩm theo category
-        [Route("ListPrCate")]
-        [HttpGet]
-        public Category GetAllProductWithCategory(int id)
-        {
-           var catery= _context.Categories.Include(data => data.Products)
-                .FirstOrDefault(cate => cate.Id == id);
 
-            if(catery == null)
+        [HttpDelete("id")]
+        public async Task<IActionResult> UpdatePr(int id) 
+        {
+            var product = _contextpr.Products.Find(id);
+            if (product != null)
             {
-                return null;
+                _contextpr.Products.Remove(product);
+                return NoContent();
             }
+            return BadRequest();
+        }
+        [Route("Getdetail")]
+        [HttpGet]
+        public async Task<JsonResult> GetDetailProduct(int id)
+        {
+            var product = _contextpr.Products.FindAsync(id);
+            if (product == null)
+            {
+                return new JsonResult("không tìm thấy sản phẩm này");
+            }
+            return new JsonResult(product);
+        }
 
-            return catery;
-        }
-        // xoa 1 sản phẩm ra khỏi danh sách sản phẩm 
-        public IActionResult DeleteProduct(int id)
-        {
-            var product = _context.Products.Find(id);
-            if(product == null)
-            {
-                return NotFound();
-            }
-            _context.Products.Remove(product);
-            _context.SaveChanges();
-            return NoContent();
-        }
-        // sua 1 san pham
-        public IActionResult UpdateProduct(Product pr)
-        {
-           _context.Products.Update(pr);
-            _context.SaveChanges();
-            return NoContent();
-        }
     }
 }
