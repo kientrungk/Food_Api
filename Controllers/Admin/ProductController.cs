@@ -1,5 +1,6 @@
 ﻿using ApiWebFood.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -98,6 +99,5 @@ namespace ApiWebFood.Controllers.Admin
             }
             return new JsonResult(product);
         }
-
     }
 }

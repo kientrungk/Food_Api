@@ -1,8 +1,11 @@
 
+using ApiWebFood.Controllers.Client;
 using ApiWebFood.Entities;
+using ApiWebFood.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -52,10 +55,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
+ builder.Services.AddScoped<ISignInService, SignInService>();
+
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options
     => options.SerializerSettings.ReferenceLoopHandling
     = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.ClearProviders();
+    loggingBuilder.AddSerilog();
+});
+
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {

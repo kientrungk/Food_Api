@@ -90,3 +90,16 @@ D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSh
 D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
 D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Newtonsoft.Json.dll
 D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\AutoMapper.dll
+D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Binder.dll
+D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Microsoft.Extensions.Hosting.Abstractions.dll
+D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Serilog.dll
+D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Serilog.AspNetCore.dll
+D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Serilog.Extensions.Hosting.dll
+D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Serilog.Extensions.Logging.dll
+D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Serilog.Formatting.Compact.dll
+D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Serilog.Settings.Configuration.dll
+D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Serilog.Sinks.Console.dll
+D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Serilog.Sinks.Debug.dll
+D:\c#Workspace\ApiWebFood\ApiWebFood\bin\Debug\net6.0\Serilog.Sinks.File.dll
