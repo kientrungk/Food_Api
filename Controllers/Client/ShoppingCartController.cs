@@ -55,7 +55,6 @@ namespace ApiWebFood.Controllers.Client
             }
             return Ok(ProductModel.ListCartUser);
         }
-
         [Route("Buy")]
         [HttpPost]
         public async Task<IActionResult> BuyProduct()

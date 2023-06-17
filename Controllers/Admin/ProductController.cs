@@ -1,4 +1,5 @@
-﻿using ApiWebFood.Entities;
+﻿using ApiWebFood.Data;
+using ApiWebFood.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Mvc;
@@ -65,6 +66,28 @@ namespace ApiWebFood.Controllers.Admin
                 return BadRequest();
                 throw;
             }
+        }
+        [Route("GetListCart")]
+        [HttpGet]
+        public async Task<IActionResult> GetCart()
+        {
+            if (ProductModel.ListCartUser != null)
+            {
+                return new JsonResult(ProductModel.ListCartUser);
+            }
+            return NoContent();
+        }
+        [Route("delete/{id}")]
+        [HttpPost]
+        public async Task<IActionResult> Deleteincart(int id)
+        {
+            var pro = ProductModel.ListCartUser.FirstOrDefault(i => i.ProductId == id);
+            if (pro != null)
+            {
+                ProductModel.ListCartUser.Remove(pro);
+                return new JsonResult(ProductModel.ListCartUser);
+            }
+            return BadRequest();
         }
         [HttpPut]
         public async Task<IActionResult> UpdatePr(Product pr)

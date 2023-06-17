@@ -98,7 +98,6 @@ namespace ApiWebFood.Controllers.Login
             }
             catch (Exception)
             {
-
                 throw;
                 return Unauthorized(login);
             }
