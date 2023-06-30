@@ -55,6 +55,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
+
+builder.Services.AddAuthorization(option =>
+{
+    option.AddPolicy("SupperAdmin", policy => policy.RequireUserName("SupperAdmin"));
+    option.AddPolicy("DecentralizationAdmin" , policy => policy.RequireRole("DecentralizationAdmin"));
+
+    option.AddPolicy("User", policy=> policy.RequireRole("User"));
+    option.AddPolicy("Auth", policy => policy.RequireAuthenticatedUser());
+});
  builder.Services.AddScoped<ISignInService, SignInService>();
 
 builder.Services.AddControllers()

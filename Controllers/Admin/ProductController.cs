@@ -29,6 +29,10 @@ namespace ApiWebFood.Controllers.Admin
         {
             try
             {
+                if (pr.Price <= 0)
+                {
+                    return new JsonResult("KIểm tra lại thông số");
+                }
                 Product prs = new()
                 {
                     Name = pr.Name,
@@ -59,7 +63,6 @@ namespace ApiWebFood.Controllers.Admin
                 await _contextpr.Products.AddAsync(prs);
                 _contextpr.SaveChanges();
                 return Ok(prs);
-                return Ok(pr);
             }
             catch (Exception)
             {
@@ -77,36 +80,28 @@ namespace ApiWebFood.Controllers.Admin
             }
             return NoContent();
         }
-        [Route("delete/{id}")]
-        [HttpPost]
+        [HttpDelete]
         public async Task<IActionResult> Deleteincart(int id)
         {
-            var pro = ProductModel.ListCartUser.FirstOrDefault(i => i.ProductId == id);
-            if (pro != null)
+            var product = _contextpr.Products.Find(id);
+            string messeage = "";
+            if (product == null)
             {
-                ProductModel.ListCartUser.Remove(pro);
-                return new JsonResult(ProductModel.ListCartUser);
+                messeage = "Không có Tìm thấy sản phẩm này";
+                return new JsonResult(messeage);
             }
-            return BadRequest();
-        }
-        [HttpPut]
-        public async Task<IActionResult> UpdatePr(Product pr)
-        {
-            if (pr != null)
-            {
-                _contextpr.Products.Update(pr);
-            }
+            _contextpr.Products.RemoveRange(product);
             _contextpr.SaveChanges();
-            return Ok();
+            messeage="xóa sản phẩm thành công";
+            return new JsonResult(messeage);
         }
-
-        [HttpDelete("id")]
+        [HttpPut("id")]
         public async Task<IActionResult> UpdatePr(int id) 
         {
             var product = _contextpr.Products.Find(id);
             if (product != null)
             {
-                _contextpr.Products.Remove(product);
+                _contextpr.Products.Update(product);
                 return NoContent();
             }
             return BadRequest();

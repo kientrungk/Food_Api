@@ -9,5 +9,6 @@
         public string? Email { get; set; }
 
         public string? Token { get; set; }
+        public bool success { get; set; }
     }
 }

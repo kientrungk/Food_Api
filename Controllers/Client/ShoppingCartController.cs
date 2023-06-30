@@ -1,12 +1,14 @@
 ﻿using ApiWebFood.Data;
 using ApiWebFood.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiWebFood.Controllers.Client
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ShoppingCartController : ControllerBase
     {
