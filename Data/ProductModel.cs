@@ -4,6 +4,6 @@
     {
         public int uid { get; set; }
         public Guid Id { get; set; }
-        public static List<ShppingCartModelcs> ListCartUser { get; set; }
+        public static Dictionary<ShppingCartModelcs, int> ListCartUser { get; set; }
     }
 }

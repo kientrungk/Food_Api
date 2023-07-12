@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAq398Nz5HJ02TrREhFWzodwAAAAACAAAAAAAQZgAAAAEAACAAAAAaVz5SsJ88fyLKM6iQOxf85wmMkVRlQDFrd48tljyNTQAAAAAOgAAAAAIAACAAAADTmopgUfC6LBExs+nYnAwENLdkFbD09LEmPvcOt4LYlYAAAAA8NRrVH2H77/Xp2Fo1YVsYFHpIh3J6Cbb/dyutex7hzZahN9FuZ0SHl+NNt2HMQRKAwSKztdcKCD9zeqiCOA9wQfvcrCQbF3/8dfGErjP1+1klP7vL8gG9iJEz0aWUNqgJnLAFAlZzYPkLJ2X2GVe5CkBazcZOsnqBNg7ahDC6KUAAAABGEyGUzpEbNq4r0u43RZQR9DPhms1r1enQAtnmNI2ty4mrDlpYF13i/qFbpIglk5hzCol9m0mozLzpmDQsxmIv</EncryptedPassword>
+    <History>False|2023-07-11T16:40:12.2732624Z;False|2023-07-11T23:29:06.3310321+07:00;True|2023-07-11T23:22:29.3903726+07:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="Connection">
+      <Value>Data Source=localhost,1433%3b Database=ApiDotNet%3bUser Id=sa%3bPassword=anhchien2003%3bTrustServerCertificate=true</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="ApiWebFood.Entities.ApiDotNetContext">
+      <Value>Data Source=localhost,1433%3b Database=ApiDotNet%3bUser Id=sa%3bPassword=anhchien2003%3bTrustServerCertificate=true</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

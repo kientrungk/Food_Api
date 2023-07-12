@@ -44,11 +44,11 @@ namespace ApiWebFood.Controllers.Admin
                     ProductDiscounts = null,
                     Reviews = null,
                 };
-                if(pr.Carts.Count > 0 && pr.Carts != null)
+                if (pr.Carts.Count > 0 && pr.Carts != null)
                 {
                     prs.Carts = pr.Carts;
                 }
-                if(pr.ImgProducts != null && pr.ImgProducts.Count > 0)
+                if (pr.ImgProducts != null && pr.ImgProducts.Count > 0)
                 {
                     prs.ImgProducts = pr.ImgProducts;
                 }
@@ -84,6 +84,11 @@ namespace ApiWebFood.Controllers.Admin
         public async Task<IActionResult> Deleteincart(int id)
         {
             var product = _contextpr.Products.Find(id);
+            var imagepr = _contextpr.ImgProducts.Where(obj => obj.ProductId == id);
+            foreach (var item in imagepr)
+            {
+                _contextpr.ImgProducts.RemoveRange(item);
+            }
             string messeage = "";
             if (product == null)
             {
@@ -92,11 +97,11 @@ namespace ApiWebFood.Controllers.Admin
             }
             _contextpr.Products.RemoveRange(product);
             _contextpr.SaveChanges();
-            messeage="xóa sản phẩm thành công";
+            messeage = "xóa sản phẩm thành công";
             return new JsonResult(messeage);
         }
         [HttpPut("id")]
-        public async Task<IActionResult> UpdatePr(int id) 
+        public async Task<IActionResult> UpdatePr(int id)
         {
             var product = _contextpr.Products.Find(id);
             if (product != null)
@@ -110,12 +115,51 @@ namespace ApiWebFood.Controllers.Admin
         [HttpGet]
         public async Task<JsonResult> GetDetailProduct(int id)
         {
-            var product = _contextpr.Products.FindAsync(id);
+            var product = _contextpr.Products.FirstOrDefault(productid=> productid.Id == id);
             if (product == null)
             {
                 return new JsonResult("không tìm thấy sản phẩm này");
             }
             return new JsonResult(product);
+        }
+
+        [Route("GetNameCategory")]
+        [HttpGet]
+        public async Task<IActionResult> GetNameCate(int id)
+        {
+            var CateName = _contextpr.Categories.FirstOrDefault(name => name.Id == id)?.Name;
+            if (CateName == null)
+            {
+                return new JsonResult("|-|");
+            }
+            return new JsonResult(CateName);
+        }
+
+        [Route("ListImage")]
+        [HttpGet]
+        public async Task<IActionResult> GetListImage()
+        {
+            var listimage = _contextpr.ImgProducts.ToList();
+            return new JsonResult(listimage);
+        }
+
+        [Route("ImageWithid")]
+        [HttpGet]
+        public async Task<IActionResult> GetImageid(int id)
+        {
+            var image = _contextpr.ImgProducts.FirstOrDefault(obj => obj.ProductId == id);
+            if (image == null) return BadRequest("khong tim thay san pham nay");
+            return new JsonResult(image);
+        }
+
+        // list image with id
+        [Route("listImageWithid")]
+        [HttpGet]
+        public async Task<IActionResult> GetListImageid(int id)
+        {
+            var image = _contextpr.ImgProducts.Where(obj => obj.ProductId == id);
+            if (image == null) return BadRequest("khong tim thay san pham nay");
+            return new JsonResult(image);
         }
     }
 }

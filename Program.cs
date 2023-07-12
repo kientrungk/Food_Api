@@ -40,6 +40,8 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod();
     });
 });
+builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

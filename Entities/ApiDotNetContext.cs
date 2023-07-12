@@ -140,19 +140,19 @@ public partial class ApiDotNetContext : DbContext
 
         modelBuilder.Entity<ProductDiscount>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ProductD__3213E83FA0C2979D");
+            entity.HasKey(e => e.Id).HasName("PK__ProductD__3213E83FBEA8C030");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.DiscountId).HasColumnName("discount_id");
-            entity.Property(e => e.ProductId).HasColumnName("Product_id");
+            entity.Property(e => e.CateId).HasColumnName("CateID");
+            entity.Property(e => e.Productid).HasColumnName("productid");
 
-            entity.HasOne(d => d.Discount).WithMany(p => p.ProductDiscounts)
-                .HasForeignKey(d => d.DiscountId)
-                .HasConstraintName("FK__ProductDi__disco__6B24EA82");
+            entity.HasOne(d => d.Cate).WithMany(p => p.ProductDiscounts)
+                .HasForeignKey(d => d.CateId)
+                .HasConstraintName("FK__ProductDi__CateI__17036CC0");
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductDiscounts)
-                .HasForeignKey(d => d.ProductId)
-                .HasConstraintName("FK__ProductDi__Produ__6A30C649");
+                .HasForeignKey(d => d.Productid)
+                .HasConstraintName("FK__ProductDi__produ__160F4887");
         });
 
         modelBuilder.Entity<Review>(entity =>

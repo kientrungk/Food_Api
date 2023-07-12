@@ -9,5 +9,7 @@ public partial class Category
 
     public string Name { get; set; } = null!;
 
+    public virtual ICollection<ProductDiscount> ProductDiscounts { get; set; } = new List<ProductDiscount>();
+
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

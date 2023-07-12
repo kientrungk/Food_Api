@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace ApiWebFood.Entities;
-[Serializable]
+
 public partial class Product
 {
     public int Id { get; set; }
