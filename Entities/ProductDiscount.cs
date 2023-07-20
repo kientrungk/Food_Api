@@ -11,7 +11,11 @@ public partial class ProductDiscount
 
     public int? CateId { get; set; }
 
+    public int? Discountid { get; set; }
+
     public virtual Category? Cate { get; set; }
+
+    public virtual Discount? Discount { get; set; }
 
     public virtual Product? Product { get; set; }
 }

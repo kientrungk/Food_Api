@@ -20,7 +20,7 @@ namespace ApiWebFood.Controllers.Login
 {
     [Route("/api/auth")]
     [ApiController]
-    [Authorize(policy: "Auth")]
+    //[Authorize(policy: "Auth")]
     public class AuthenticationController : ControllerBase
     {
         private readonly ApiDotNetContext _context;
@@ -31,8 +31,8 @@ namespace ApiWebFood.Controllers.Login
             _configuration = configuration;
         }
         [Route("/register")]
-        [AllowAnonymous]
         [HttpPost]
+        //[AllowAnonymous]
         public IActionResult Register(UserRegister user)
         {
             if (user is not null)
@@ -60,7 +60,7 @@ namespace ApiWebFood.Controllers.Login
                 _configuration["JWT:Issuer"],
                 _configuration["JWT:Audience"],
                 claims,
-                expires: DateTime.Now.AddHours(2),
+                expires: DateTime.Now.AddMinutes(20),
                 signingCredentials: signatureKey
                 );
 
@@ -68,7 +68,8 @@ namespace ApiWebFood.Controllers.Login
         }
         [Route("Profile")]
         [HttpGet]
-        public IActionResult Profile()
+        //[AllowAnonymous]
+        public async Task<IActionResult> Profile()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             if(identity!= null)
@@ -87,16 +88,15 @@ namespace ApiWebFood.Controllers.Login
         }
         [Route("login")]
         [HttpPost]
-        [AllowAnonymous]
-        public IActionResult Login(UserLogin login)
+        //[AllowAnonymous]
+        public async Task<IActionResult> Login(UserLogin login)
         {
             try
             {
-                var UserLogin = _context.Users.FirstOrDefault(u=> u.Email.Equals(login.Email));
+                var UserLogin =  _context.Users.FirstOrDefault(u=> u.Email.Equals(login.Email));
                 if (UserLogin == null)
                 {
                     return new JsonResult(new { success = false, message = "kiểm tra lại thông tin tài khoản" });
-                    //return NotFound(new { success = false, message = "kiểm tra lại thông tin tài khoản" });
                 }
                 bool verycode = BCrypt.Net.BCrypt.Verify(login.Password, UserLogin.PassWord);
                 if (!verycode)
@@ -107,7 +107,7 @@ namespace ApiWebFood.Controllers.Login
             }
             catch (Exception)
             {
-                throw;
+                return Unauthorized();
             }
         }
     }

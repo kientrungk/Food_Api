@@ -33,6 +33,8 @@ public partial class ApiDotNetContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<UserAdmin> UserAdmins { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=localhost,1433; Database=ApiDotNet;User Id=sa;Password=anhchien2003;TrustServerCertificate=true");
@@ -106,16 +108,18 @@ public partial class ApiDotNetContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Orders__3213E83F506C679E");
+            entity.HasKey(e => e.Id).HasName("PK__Orders__3213E83FADA21A57");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.OrderDate).HasColumnType("date");
+            entity.Property(e => e.Orderdate)
+                .HasColumnType("date")
+                .HasColumnName("orderdate");
             entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.Userid).HasColumnName("userid");
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.Userid)
-                .HasConstraintName("FK__Orders__userid__5441852A");
+                .HasConstraintName("FK__Orders__userid__29221CFB");
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -140,19 +144,24 @@ public partial class ApiDotNetContext : DbContext
 
         modelBuilder.Entity<ProductDiscount>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ProductD__3213E83FBEA8C030");
+            entity.HasKey(e => e.Id).HasName("PK__ProductD__3213E83F51F3E82E");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CateId).HasColumnName("CateID");
+            entity.Property(e => e.Discountid).HasColumnName("discountid");
             entity.Property(e => e.Productid).HasColumnName("productid");
 
             entity.HasOne(d => d.Cate).WithMany(p => p.ProductDiscounts)
                 .HasForeignKey(d => d.CateId)
-                .HasConstraintName("FK__ProductDi__CateI__17036CC0");
+                .HasConstraintName("FK__ProductDi__CateI__1AD3FDA4");
+
+            entity.HasOne(d => d.Discount).WithMany(p => p.ProductDiscounts)
+                .HasForeignKey(d => d.Discountid)
+                .HasConstraintName("FK__ProductDi__disco__1BC821DD");
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductDiscounts)
                 .HasForeignKey(d => d.Productid)
-                .HasConstraintName("FK__ProductDi__produ__160F4887");
+                .HasConstraintName("FK__ProductDi__produ__19DFD96B");
         });
 
         modelBuilder.Entity<Review>(entity =>
@@ -194,6 +203,26 @@ public partial class ApiDotNetContext : DbContext
             entity.Property(e => e.UserName)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<UserAdmin>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__UserAdmi__3213E83F4ADF2105");
+
+            entity.ToTable("UserAdmin");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.DividePower)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Password)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("password");
+            entity.Property(e => e.Username)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("username");
         });
 
         OnModelCreatingPartial(modelBuilder);

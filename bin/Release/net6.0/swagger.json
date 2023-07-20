@@ -123,6 +123,124 @@
         }
       }
     },
+    "/api/Comment/GettAllComment": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Comment/Addnewcomment": {
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Review"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Comment/Deletecomment": {
+      "delete": {
+        "tags": [
+          "Comment"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/discount/GetAllDis": {
+      "get": {
+        "tags": [
+          "discount"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/discount/AddNewDis": {
+      "post": {
+        "tags": [
+          "discount"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Discount"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/discount/DeleteDiscount": {
+      "delete": {
+        "tags": [
+          "discount"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/File/ImgProduct": {
       "post": {
         "tags": [
@@ -159,6 +277,42 @@
       "get": {
         "tags": [
           "File"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Order": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Order/TotalOder": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Order/TotalPrice": {
+      "get": {
+        "tags": [
+          "Order"
         ],
         "responses": {
           "200": {
@@ -346,6 +500,37 @@
         }
       }
     },
+    "/api/Role/gettAllRole": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Role/addrole": {
+      "post": {
+        "tags": [
+          "Role"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/ShoppingCart/AddPr": {
       "post": {
         "tags": [
@@ -366,8 +551,8 @@
         }
       }
     },
-    "/api/ShoppingCart/Buy": {
-      "post": {
+    "/api/ShoppingCart/GetListCart": {
+      "get": {
         "tags": [
           "ShoppingCart"
         ],
@@ -378,10 +563,69 @@
         }
       }
     },
-    "/api/ShoppingCart/GetListCart": {
-      "get": {
+    "/api/ShoppingCart/DecreaseIncard": {
+      "post": {
         "tags": [
           "ShoppingCart"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ShoppingCart/sendeamil": {
+      "post": {
+        "tags": [
+          "ShoppingCart"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "tetxt",
+            "type": "string",
+            "default": "dsdsdsdsdsdss"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [ ]
+          }
+        ]
+      }
+    },
+    "/api/ShoppingCart/AddNewOrder": {
+      "post": {
+        "tags": [
+          "ShoppingCart"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "userid",
+            "type": "integer",
+            "format": "int32"
+          }
         ],
         "responses": {
           "200": {
@@ -410,8 +654,19 @@
                 "$ref": "#/definitions/WeatherForecast"
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": [ ]
+          }
+        ]
       }
     }
   },
@@ -441,7 +696,8 @@
         "product": {
           "$ref": "#/definitions/Product"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "Category": {
       "type": "object",
@@ -465,7 +721,43 @@
             "$ref": "#/definitions/Product"
           }
         }
-      }
+      },
+      "additionalProperties": false
+    },
+    "Discount": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "code": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "discountAmount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "startDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "endDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "productDiscounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductDiscount"
+          }
+        }
+      },
+      "additionalProperties": false
     },
     "ImgProduct": {
       "type": "object",
@@ -484,7 +776,8 @@
         "product": {
           "$ref": "#/definitions/Product"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "Order": {
       "type": "object",
@@ -497,7 +790,11 @@
           "format": "int32",
           "type": "integer"
         },
-        "orderDate": {
+        "totalPrice": {
+          "format": "double",
+          "type": "number"
+        },
+        "orderdate": {
           "format": "date-time",
           "type": "string"
         },
@@ -508,7 +805,8 @@
         "user": {
           "$ref": "#/definitions/User"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "Product": {
       "type": "object",
@@ -558,7 +856,8 @@
             "$ref": "#/definitions/Review"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "ProductDiscount": {
       "type": "object",
@@ -575,13 +874,21 @@
           "format": "int32",
           "type": "integer"
         },
+        "discountid": {
+          "format": "int32",
+          "type": "integer"
+        },
         "cate": {
           "$ref": "#/definitions/Category"
+        },
+        "discount": {
+          "$ref": "#/definitions/Discount"
         },
         "product": {
           "$ref": "#/definitions/Product"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "Review": {
       "type": "object",
@@ -611,7 +918,8 @@
         "user": {
           "$ref": "#/definitions/User"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "User": {
       "type": "object",
@@ -650,7 +958,8 @@
             "$ref": "#/definitions/Review"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "UserLogin": {
       "type": "object",
@@ -661,7 +970,8 @@
         "password": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "UserRegister": {
       "required": [
@@ -684,7 +994,8 @@
         "password": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "WeatherForecast": {
       "type": "object",
@@ -705,7 +1016,16 @@
         "summary": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
+    }
+  },
+  "securityDefinitions": {
+    "Admin": {
+      "type": "apiKey",
+      "name": "Authentication",
+      "in": "header",
+      "description": "Standard Authorization header using the Bearer scheme (\"{token}\")"
     }
   }
 }

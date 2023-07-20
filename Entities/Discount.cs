@@ -16,4 +16,6 @@ public partial class Discount
     public DateTime? EndDate { get; set; }
 
     public string? Description { get; set; }
+
+    public virtual ICollection<ProductDiscount> ProductDiscounts { get; set; } = new List<ProductDiscount>();
 }

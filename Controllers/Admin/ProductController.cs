@@ -21,7 +21,7 @@ namespace ApiWebFood.Controllers.Admin
         [HttpGet]
         public async Task<IActionResult> GetAllPr()
         {
-            var pr = _contextpr.Products.ToList();
+            var pr = _contextpr.Products.Include(item=> item.ImgProducts).ToList();
             return Ok(pr);
         }
         [HttpPost]
@@ -115,7 +115,10 @@ namespace ApiWebFood.Controllers.Admin
         [HttpGet]
         public async Task<JsonResult> GetDetailProduct(int id)
         {
-            var product = _contextpr.Products.FirstOrDefault(productid=> productid.Id == id);
+            var product = _contextpr.Products.
+                Include(item => item.ImgProducts).
+                Include(item=> item.Reviews).
+                FirstOrDefault(productid=> productid.Id == id);
             if (product == null)
             {
                 return new JsonResult("không tìm thấy sản phẩm này");
