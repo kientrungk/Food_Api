@@ -54,12 +54,12 @@ namespace ApiWebFood.Controllers.Admin
                 found.Status = Status;
                 _ContextOrder.Update(found);
                 await _ContextOrder.SaveChangesAsync();
-                var messseage = new Mess()
+                var messseages = new Mess()
                 {
                     messease = "Cập nhập thành công",
                     Statuscode = true
                 };
-                return Ok(messseage);
+                return Ok(messseages);
             }
             Mess messseage = new Mess()
             {
